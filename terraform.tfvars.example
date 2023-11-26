@@ -4,4 +4,3 @@ vpc_configs = {
   enable_dns_hostnames = true
 }
 
-cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
