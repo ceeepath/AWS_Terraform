@@ -17,4 +17,4 @@ sudo apt update && sudo apt-get install terraform -y
 # verify the terraform installation
 terraform -help
 
-cd
+cd $PROJECT_ROOT
