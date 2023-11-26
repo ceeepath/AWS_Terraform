@@ -15,3 +15,16 @@ variable "vpc_configs" {
     enable_dns_hostnames = false
   }
 }
+
+variable "public_subnet_configs" {
+  description = "value"
+  type = map(object({
+    cidr_block = string
+    availability_zone = string
+    map_public_ip_on_launch = bool
+    Name = string 
+  }))
+  default = {
+    "az1" = { cidr_block = "10.0.0.0/24", availability_zone = "us-east-1a", map_public_ip_on_launch = true, Name = "public-subnet-az1" }
+  }
+}
