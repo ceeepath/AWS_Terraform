@@ -9,7 +9,7 @@ resource "aws_vpc" "main" {
   }
 }
 
-# Create Internet Gateway
+# Create Internet Gateway and Attach it to a VPC
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -18,21 +18,36 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-# Attach Internet Gateway to VPC
-resource "aws_internet_gateway_attachment" "main" {
-  internet_gateway_id = aws_internet_gateway.main.id
-  vpc_id              = aws_vpc.main.id
-}
-
 # Create Public Subnets
 resource "aws_subnet" "main" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = var.public_subnet_configs.cidr_block
-  availability_zone = var.public_subnet_configs.availability_zone
-  map_public_ip_on_launch = var.public_subnet_configs.map_public_ip_on_launch
+  for_each                = var.public_subnet_configs
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = each.value.cidr_block
+  availability_zone       = each.value.availability_zone
+  map_public_ip_on_launch = each.value.map_public_ip_on_launch
 
   tags = {
-    Name = var.public_subnet_configs.Name
+    Name = each.value.Name
   }
 }
 
+# Create Public Route Table
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = var.public_route_table_configs.cidr_block
+    gateway_id = aws_internet_gateway.main.id
+  }
+
+  tags = {
+    Name = var.public_route_table_configs.Name
+  }
+}
+
+# Associate the public subnets with the public route table
+resource "aws_route_table_association" "public" {
+  for_each       = var.public_subnet_configs
+  subnet_id      = aws_subnet.main[each.key].id
+  route_table_id = aws_route_table.public.id
+}

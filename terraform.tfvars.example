@@ -4,3 +4,10 @@ vpc_configs = {
   enable_dns_hostnames = true
 }
 
+public_subnet_configs = {
+  az1 = { cidr_block = "10.0.0.0/24", availability_zone = "us-east-1a", map_public_ip_on_launch = true, Name = "public-subnet-az1" }
+  az2 = { cidr_block = "10.0.1.0/24", availability_zone = "us-east-1b", map_public_ip_on_launch = true, Name = "public-subnet-az2" }
+}
+
+public_route_table_configs = { cidr_block = "0.0.0.0/0", Name = "public-route-table" }
+

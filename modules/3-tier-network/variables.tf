@@ -17,14 +17,28 @@ variable "vpc_configs" {
 }
 
 variable "public_subnet_configs" {
-  description = "value"
+  description = <<DESCRIPTION
+  cidr_block = (Optional) The IPv4 CIDR block for the subnet.
+  availability_zone = (Optional) AZ for the subnet.
+  map_public_ip_on_launch = (Optional) Specify true to indicate that instances launched into the subnet should be assigned a public IP address. Default is `false`.
+  Name = (Optional) Name tag to assign to the subnet.
+  DESCRIPTION
   type = map(object({
-    cidr_block = string
-    availability_zone = string
+    cidr_block              = string
+    availability_zone       = string
     map_public_ip_on_launch = bool
-    Name = string 
+    Name                    = string
   }))
   default = {
-    "az1" = { cidr_block = "10.0.0.0/24", availability_zone = "us-east-1a", map_public_ip_on_launch = true, Name = "public-subnet-az1" }
+    az1 = { cidr_block = "10.0.0.0/24", availability_zone = "us-east-1a", map_public_ip_on_launch = true, Name = "public-subnet-az1" }
   }
+}
+
+variable "public_route_table_configs" {
+  description = <<DESCRIPTION
+  cidr_block = (Required) The CIDR block of the route.
+  Name = (Optional) Name tag to assign to the route table.
+  DESCRIPTION
+  type        = map(string)
+  default     = { cidr_block = "0.0.0.0/0", Name = "public-route-table" }
 }
