@@ -11,3 +11,9 @@ public_subnet_configs = {
 
 public_route_table_configs = { cidr_block = "0.0.0.0/0", Name = "public-route-table" }
 
+private_subnet_configs = {
+  app-az1  = { cidr_block = "10.0.2.0/24", availability_zone = "us-east-1a", Name = "private-app-subnet-az1" }
+  app-az2  = { cidr_block = "10.0.3.0/24", availability_zone = "us-east-1b", Name = "private-app-subnet-az2" }
+  data-az1 = { cidr_block = "10.0.4.0/24", availability_zone = "us-east-1a", Name = "private-data-subnet-az1" }
+  data-az2 = { cidr_block = "10.0.5.0/24", availability_zone = "us-east-1b", Name = "private-data-subnet-az2" }
+}

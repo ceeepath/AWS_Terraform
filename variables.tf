@@ -18,3 +18,11 @@ variable "public_subnet_configs" {
 variable "public_route_table_configs" {
   type = map(string)
 }
+
+variable "private_subnet_configs" {
+  type = map(object({
+    cidr_block        = string
+    availability_zone = string
+    Name              = string
+  }))
+}

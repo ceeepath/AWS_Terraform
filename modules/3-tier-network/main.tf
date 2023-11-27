@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "main" {
 }
 
 # Create Public Subnets
-resource "aws_subnet" "main" {
+resource "aws_subnet" "public" {
   for_each                = var.public_subnet_configs
   vpc_id                  = aws_vpc.main.id
   cidr_block              = each.value.cidr_block
@@ -48,6 +48,18 @@ resource "aws_route_table" "public" {
 # Associate the public subnets with the public route table
 resource "aws_route_table_association" "public" {
   for_each       = var.public_subnet_configs
-  subnet_id      = aws_subnet.main[each.key].id
+  subnet_id      = aws_subnet.public[each.key].id
   route_table_id = aws_route_table.public.id
+}
+
+# Create Private Subnets
+resource "aws_subnet" "private" {
+  for_each          = var.private_subnet_configs
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = each.value.cidr_block
+  availability_zone = each.value.availability_zone
+
+  tags = {
+    Name = each.value.Name
+  }
 }
