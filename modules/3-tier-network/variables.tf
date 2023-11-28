@@ -74,8 +74,16 @@ variable "nat_gateway_configs" {
 
 variable "prt_association_configs" {
   description = "subnet identifiers that we want to associate with the route tables"
-  type = map(set(string))
+  type        = map(set(string))
   default = {
-    az1 = [ "" , "" ]
+    az1 = ["", ""]
+  }
+}
+
+variable "security_groups_details" {
+  description = "Name and Description of our Security Groups"
+  type        = map(map(string))
+  default = {
+    name = { alb = "", ssh = "" }
   }
 }
