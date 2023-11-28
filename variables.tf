@@ -26,3 +26,11 @@ variable "private_subnet_configs" {
     Name              = string
   }))
 }
+
+variable "nat_gateway_configs" {
+  type = map(map(string))
+}
+
+variable "prt_association_configs" {
+  type = map(set(string))
+}
