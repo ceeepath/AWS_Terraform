@@ -58,3 +58,24 @@ variable "private_subnet_configs" {
     az1 = { cidr_block = "10.0.0.0/24", availability_zone = "us-east-1a", Name = "private-subnet-az1" }
   }
 }
+
+variable "nat_gateway_configs" {
+  description = <<DESCRIPTION
+  nat_name = (Optional) Name tag to assign to the NAT gateway.
+  eip_name = (Optional) Name tag to assign to the EIP.
+  DESCRIPTION
+  type        = map(map(string))
+  default = {
+    nat_name = { az1 = "", az2 = "" }
+    eip_name = { az1 = "", az2 = "" }
+    prt_name = { az1 = "", az2 = "" }
+  }
+}
+
+variable "prt_association_configs" {
+  description = "subnet identifiers that we want to associate with the route tables"
+  type = map(set(string))
+  default = {
+    az1 = [ "" , "" ]
+  }
+}
