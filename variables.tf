@@ -34,3 +34,7 @@ variable "nat_gateway_configs" {
 variable "prt_association_configs" {
   type = map(set(string))
 }
+
+variable "security_groups_details" {
+  type = map(map(string))
+}

@@ -6,4 +6,5 @@ module "network" {
   private_subnet_configs     = var.private_subnet_configs
   nat_gateway_configs        = var.nat_gateway_configs
   prt_association_configs    = var.prt_association_configs
+  security_groups_details    = var.security_groups_details
 }

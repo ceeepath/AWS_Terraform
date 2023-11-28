@@ -28,10 +28,10 @@ resource "aws_nat_gateway" "public" {
 # Create Private Route Tables
 resource "aws_route_table" "private" {
   for_each = var.nat_gateway_configs.prt_name
-  vpc_id = aws_vpc.main.id
+  vpc_id   = aws_vpc.main.id
 
   route {
-    cidr_block = local.internet_cidr
+    cidr_block     = local.internet_cidr
     nat_gateway_id = aws_nat_gateway.public[each.key].id
   }
 
