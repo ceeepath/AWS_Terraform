@@ -1,0 +1,23 @@
+name: Test Terraform Script
+on:
+  push:
+    branches:
+    - 9-test-github-action
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+    - name: clone repository
+      uses: actions/checkout@v2
+    - name: set up terraform
+      uses: hashicorp/setup-terraform@v3
+    - name: Terraform Init
+      id: init
+      run: terraform init
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color
+      continue-on-error: true
