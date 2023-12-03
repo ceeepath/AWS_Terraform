@@ -38,3 +38,7 @@ variable "prt_association_configs" {
 variable "security_groups_details" {
   type = map(map(string))
 }
+
+variable "appserver_configs" {
+  type = map(string)
+}
