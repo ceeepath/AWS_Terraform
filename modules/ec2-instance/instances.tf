@@ -39,7 +39,7 @@ resource "aws_lb_target_group_attachment" "app" {
   target_id        = aws_instance.app[each.key].id
   port             = 80
 
-  depends_on = [ aws_instance.app ]
+  depends_on = [aws_instance.app]
 }
 
 # ALB HTTP Listener

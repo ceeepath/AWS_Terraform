@@ -1,7 +1,7 @@
-data "aws_key_pair" "ssh" {
-  key_name = "project"
+data "aws_route53_zone" "selected" {
+  name         = "kunleelnuk.click"
 }
 
-output "name" {
-  value = data.aws_key_pair.ssh.key_name
+output "zone_id" {
+  value = data.aws_route53_zone.selected.zone_id
 }
