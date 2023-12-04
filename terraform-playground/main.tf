@@ -5,4 +5,4 @@ data "aws_acm_certificate" "issued" {
 
 output "zone_id" {
   value = data.aws_acm_certificate.issued.arn
-}
+

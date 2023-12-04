@@ -106,6 +106,7 @@ variable "appserver_configs" {
   default = {
     "name" = ""
   }
+
 }
 
 variable "ssh_key" {
