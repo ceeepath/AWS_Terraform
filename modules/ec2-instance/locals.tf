@@ -63,5 +63,6 @@ locals {
 # ec2-instance locals
 locals {
   instance_type = "t2.micro"
+  user_data     = "/workspace/AWS_Terraform/modules/ec2-instance/website.sh"
 }
 

@@ -107,3 +107,7 @@ variable "appserver_configs" {
     "name" = ""
   }
 }
+
+variable "ssh_key" {
+  description = "My EC2-Instances SSH Key"
+}
