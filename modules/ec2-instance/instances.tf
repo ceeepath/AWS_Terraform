@@ -6,7 +6,7 @@ resource "aws_instance" "app" {
   key_name               = data.aws_key_pair.ssh.key_name
   subnet_id              = aws_subnet.private[each.key].id
   vpc_security_group_ids = ["${aws_security_group.web.id}"]
-  user_data              = file("/workspace/AWS_Terraform/modules/ec2-instance/website.sh")
+  user_data              = file(local.user_data)
 
   tags = {
     Name = each.value
@@ -39,19 +39,38 @@ resource "aws_lb_target_group_attachment" "app" {
   target_id        = aws_instance.app[each.key].id
   port             = 80
 
-  depends_on = [ aws_instance.app ]
+  depends_on = [aws_instance.app]
 }
 
-# ALB HTTP Listener
-resource "aws_lb_listener" "app" {
+# ALB HTTPS/HTTP Listener
+resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.app.arn
-  port              = "80"
-  protocol          = "HTTP"
-  #ssl_policy        = "ELBSecurityPolicy-2016-08"
-  #certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = data.aws_acm_certificate.issued.arn
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.app.arn
+  }
+}
+
+
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.app.arn
+  port              = "80"
+  protocol          = "HTTP"
+  #ssl_policy        = "ELBSecurityPolicy-2016-08"
+  #certificate_arn   = data.aws_acm_certificate.issued.arn
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }

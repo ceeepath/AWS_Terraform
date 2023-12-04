@@ -8,4 +8,5 @@ module "project" {
   prt_association_configs    = var.prt_association_configs
   security_groups_details    = var.security_groups_details
   appserver_configs          = var.appserver_configs
+  ssh_key                    = var.ssh_key
 }

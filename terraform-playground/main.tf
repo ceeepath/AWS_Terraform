@@ -1,7 +1,8 @@
-data "aws_key_pair" "ssh" {
-  key_name = "project"
+data "aws_acm_certificate" "issued" {
+  domain   = "adejikunle.com"
+  statuses = ["ISSUED"]
 }
 
-output "name" {
-  value = data.aws_key_pair.ssh.key_name
-}
+output "zone_id" {
+  value = data.aws_acm_certificate.issued.arn
+

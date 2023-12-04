@@ -42,3 +42,7 @@ variable "security_groups_details" {
 variable "appserver_configs" {
   type = map(string)
 }
+
+variable "ssh_key" {
+  description = "My EC2-Instances SSH Key"
+}

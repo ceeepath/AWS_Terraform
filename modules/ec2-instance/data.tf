@@ -15,5 +15,16 @@ data "aws_ami" "latest_rhel" {
 
 # Get SSH Key
 data "aws_key_pair" "ssh" {
-  key_name = "project"
+  key_name = var.ssh_key
+}
+
+# Get Hosted Zone ID
+data "aws_route53_zone" "zone" {
+  name = "adejikunle.com"
+}
+
+# Get Public SSL/TLS Certificate ARN
+data "aws_acm_certificate" "issued" {
+  domain   = "adejikunle.com"
+  statuses = ["ISSUED"]
 }
