@@ -1,4 +1,4 @@
-# AWS_Terraform
+# Deploy Static Website on AWS with Terraform
 My IaC Repo for managing AWS services.
 
 ## Initial Preparations
